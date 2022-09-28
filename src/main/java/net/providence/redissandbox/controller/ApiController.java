@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import net.providence.redissandbox.model.Cliente;
 import net.providence.redissandbox.repository.ClientesRepository;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/redis-stress")
@@ -29,6 +31,12 @@ public class ApiController {
             clientesRepository.save(cliente);
         }
 
+        return "OK";
+    }
+
+    @PostMapping(value = "/agregar/lista", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String agregaListaClientes(@RequestBody Set<Cliente> clientes){
+        clientesRepository.saveAll(clientes);
         return "OK";
     }
 
