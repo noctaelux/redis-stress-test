@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.providence.redissandbox.model.Cliente;
 import net.providence.redissandbox.repository.ClientesRepository;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class ApiController {
     public String generateData(@PathVariable Long datos){
         for(int i = 0 ; i < datos ; i++){
             Cliente cliente = new Cliente();
-            cliente.setId(RandomStringUtils.randomAlphanumeric(10));
+            cliente.setId(RandomUtils.nextLong());
             cliente.setNombre(RandomStringUtils.randomAlphanumeric(40));
             cliente.setApellidos(RandomStringUtils.randomAlphanumeric(40));
             cliente.setCorreo(RandomStringUtils.randomAlphanumeric(30));
@@ -41,7 +42,7 @@ public class ApiController {
     }
 
     @GetMapping("/id/{id}")
-    public Cliente traePorId(@PathVariable String id){
+    public Cliente traePorId(@PathVariable Long id){
         return clientesRepository.findById(id).orElseThrow();
     }
 
