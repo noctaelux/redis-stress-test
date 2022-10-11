@@ -36,7 +36,7 @@ public class ApiController {
     }
 
     @PostMapping(value = "/agregar/lista", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String agregaListaClientes(@RequestBody Set<Cliente> clientes){
+    public String agregaListaClientes(@RequestBody List<Cliente> clientes){
         clientesRepository.saveAll(clientes);
         return "OK";
     }
