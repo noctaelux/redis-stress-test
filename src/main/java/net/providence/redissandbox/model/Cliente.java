@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@RedisHash
+@RedisHash(value = "cliente")
 public class Cliente {
 
     @Id
