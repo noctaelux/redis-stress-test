@@ -1,33 +1,39 @@
 package net.providence.redissandbox.controller;
 
 import lombok.RequiredArgsConstructor;
+import net.providence.redissandbox.hashes.ClienteHashRepository;
 import net.providence.redissandbox.model.Cliente;
-import net.providence.redissandbox.repository.ClientesRepository;
+import net.providence.redissandbox.model.Contacto;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/redis-stress")
 @RequiredArgsConstructor
 public class ApiController {
 
-    private final ClientesRepository clientesRepository;
+    private final ClienteHashRepository clientesRepository;
 
     @PostMapping("/agregar/{datos}")
     public String generateData(@PathVariable Long datos){
         for(int i = 0 ; i < datos ; i++){
             Cliente cliente = new Cliente();
-            cliente.setId(RandomUtils.nextLong());
+            cliente.setId(RandomStringUtils.randomAlphanumeric(10));
             cliente.setNombre(RandomStringUtils.randomAlphanumeric(40));
             cliente.setApellidos(RandomStringUtils.randomAlphanumeric(40));
             cliente.setCorreo(RandomStringUtils.randomAlphanumeric(30));
             cliente.setFechaNacimiento(new Date());
+
+            for(int j = 0 ; j < 10 ; j++){
+                Contacto contacto = new Contacto();
+                contacto.setId(RandomStringUtils.randomAlphanumeric(10));
+                contacto.setNombre(RandomStringUtils.randomAlphanumeric(60));
+                cliente.addContacto(contacto);
+            }
 
             clientesRepository.save(cliente);
         }
@@ -42,7 +48,7 @@ public class ApiController {
     }
 
     @GetMapping("/id/{id}")
-    public Cliente traePorId(@PathVariable Long id){
+    public Cliente traePorId(@PathVariable String id){
         return clientesRepository.findById(id).orElseThrow();
     }
 
