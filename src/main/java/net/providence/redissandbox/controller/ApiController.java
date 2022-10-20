@@ -52,6 +52,11 @@ public class ApiController {
         return clientesRepository.findById(id).orElseThrow();
     }
 
+    @GetMapping("/nombre/{nombre}")
+    public Cliente traePorNombre(@PathVariable String nombre){
+        return clientesRepository.findFirstByNombre(nombre).orElseThrow();
+    }
+
     @GetMapping("/list")
     public List<Cliente> traeData(){
         return (List<Cliente>) clientesRepository.findAll();

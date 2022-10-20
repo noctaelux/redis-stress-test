@@ -1,12 +1,9 @@
 package net.providence.redissandbox.model;
 
-import com.redis.om.spring.annotations.Document;
 import com.redis.om.spring.annotations.Indexed;
 import com.redis.om.spring.annotations.Searchable;
 import lombok.Data;
-import lombok.NonNull;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Reference;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.ArrayList;
@@ -21,6 +18,7 @@ public class Cliente {
     private String id;
 
     @Indexed
+    @Searchable
     private String nombre;
 
     private String apellidos;
@@ -30,7 +28,6 @@ public class Cliente {
     @Indexed
     private String correo;
 
-    @Reference
     private List<Contacto> contactos = new ArrayList<>();
 
     public void addContacto(Contacto contacto){

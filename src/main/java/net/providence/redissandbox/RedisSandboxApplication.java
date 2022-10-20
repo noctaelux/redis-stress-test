@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableRedisEnhancedRepositories(basePackages = "net.providence.redissandbox.hashes.*")
+@EnableRedisEnhancedRepositories
 public class RedisSandboxApplication {
 
     public static void main(String[] args) {
